@@ -76,3 +76,4 @@ typings/
 .fusebox/
 generated
 prisma.yml
+.env
