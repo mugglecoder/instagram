@@ -27,7 +27,7 @@ export const sendSecretMail = (adress, secret) => {
     from: "gguggu@ggugggu.com",
     to: adress,
     subject: "꾸꾸꾸꾸꾸꾸꾸꾸꾸",
-    html: `Hello! Your login secret is ${secret}.</br>`
+    html: `Hello! Your login secret is <strong>${secret}</strong>.</br>`
   };
   return sendMail(email);
 };
