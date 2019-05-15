@@ -11,9 +11,7 @@ const PORT = process.env.PORT || 4000;
 
 const server = new GraphQLServer({
   schema,
-  context: ({ request }) => {
-    request;
-  }
+  context: ({ request }) => ({ request })
 });
 
 server.express.use(logger("dev"));
