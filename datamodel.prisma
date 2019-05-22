@@ -55,7 +55,7 @@ type File {
 
 type Room {
   id: ID! @id
-  paticipants: [User!]!
+  participants: [User!]!
   messages: [Messages!]!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
