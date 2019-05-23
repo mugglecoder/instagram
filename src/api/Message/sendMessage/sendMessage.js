@@ -2,7 +2,7 @@ import { prisma } from "../../../../generated/prisma-client";
 
 export default {
   Mutation: {
-    sendMessage: async (_, arg, { request, isAuthenticated }) => {
+    sendMessage: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
       const { user } = request;
       const { roomId, message, toId } = args;
@@ -19,7 +19,28 @@ export default {
       if (!room) {
         throw Error("can't find room");
       }
-      const newMessage = await prisma.createMessages();
+      const participants = await prisma.room({ id: room.id }).participants();
+      const getTo = participants.filter(
+        participant => participant.id !== user.id
+      )[0];
+      return prisma.createMessages({
+        text: message,
+        from: {
+          connect: {
+            id: user.id
+          }
+        },
+        to: {
+          connect: {
+            id: roomId ? getTo.id : toId
+          }
+        },
+        room: {
+          connect: {
+            id: room.id
+          }
+        }
+      });
     }
   }
 };
