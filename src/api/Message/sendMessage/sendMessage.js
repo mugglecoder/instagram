@@ -23,7 +23,7 @@ export default {
       const getTo = participants.filter(
         participant => participant.id !== user.id
       )[0];
-      return prisma.createMessages({
+      return prisma.createMessage({
         text: message,
         from: {
           connect: {

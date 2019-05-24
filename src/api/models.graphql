@@ -1,5 +1,6 @@
 type User {
   id: ID!
+  avatar: String
   username: String!
   email: String!
   firstName: String
@@ -61,12 +62,12 @@ type File {
 type Room {
   id: ID!
   participants: [User!]!
-  messages: [Messages!]!
+  messages: [Message!]!
   createdAt: String
   updatedAt: String
 }
 
-type Messages {
+type Message {
   id: ID!
   text: String!
   from: User!

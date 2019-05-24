@@ -21,6 +21,7 @@ export default {
       const { id: parentId } = parent;
       return user.id === parentId;
     },
-    comments: parent => prisma.user({ id: parent.id }).comments()
+    comments: parent => prisma.user({ id: parent.id }).comments(),
+    avatar: parent => prisma.user({ id: parent.id }).avatar()
   }
 };
