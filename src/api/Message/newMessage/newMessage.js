@@ -10,7 +10,9 @@ export default {
             AND: [
               { mutation_in: "CREATED" },
               {
-                node: { room: { id: roomId } }
+                node: {
+                  room: { id: roomId }
+                }
               }
             ]
           })

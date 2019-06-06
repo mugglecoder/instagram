@@ -9,11 +9,13 @@ export default {
       if (user.loginSecret === secret) {
         await prisma.updateUser({
           where: { id: user.id },
-          data: { loginSecret: "" }
+          data: {
+            loginSecret: ""
+          }
         });
         return generateToken(user.id);
       } else {
-        throw Error("비번 조합이 잘못됨");
+        throw Error("Wrong email/secret combination");
       }
     }
   }

@@ -1,6 +1,6 @@
 export const isAuthenticated = request => {
   if (!request.user) {
-    throw Error("유저가 없습니다");
+    throw Error("You need to log in to perform this action");
   }
   return;
 };
