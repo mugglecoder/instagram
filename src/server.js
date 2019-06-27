@@ -18,10 +18,12 @@ const server = new GraphQLServer({
   context: ({ request }) => ({ request, isAuthenticated })
 });
 
+const publicDir = path.join(__dirname, "test");
+path.join(__dirname);
 server.express.use(logger("dev"));
 server.express.use(authenticateJwt);
 server.express.use(cors());
-server.express.use("/images", express.static("/test"));
+server.express.use("/images", express.static(publicDir));
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
