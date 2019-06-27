@@ -1,5 +1,4 @@
 import { prisma } from "../../../../generated/prisma-client";
-import multer from "multer";
 
 export default {
   Mutation: {

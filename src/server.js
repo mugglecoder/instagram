@@ -1,4 +1,5 @@
 import "./env";
+import express from "express";
 import { GraphQLServer } from "graphql-yoga";
 import logger from "morgan";
 import schema from "./schema";
@@ -7,7 +8,9 @@ import { authenticateJwt } from "./passport";
 import { isAuthenticated, test } from "./middlewares";
 import cors from "cors";
 import multer from "multer";
+import path from "path";
 
+const app = express();
 const PORT = process.env.PORT || 4000;
 
 const server = new GraphQLServer({
@@ -18,24 +21,24 @@ const server = new GraphQLServer({
 server.express.use(logger("dev"));
 server.express.use(authenticateJwt);
 server.express.use(cors());
+server.express.use("/images", express.static("/test"));
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "images");
+    cb(null, "images/test");
   },
   filename: function(req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
   }
 });
 var upload = multer({ storage }).single("file");
-server.express.post("/upload", function(req, res) {
+server.express.use("/upload", function(req, res) {
   upload(req, res, function(err) {
     if (err instanceof multer.MulterError) {
       return res.status(500).json(err);
     } else if (err) {
       return res.status(500).json(err);
     }
-    console.log(req.file);
     return res.status(200).send(req.file);
   });
 });
