@@ -4,7 +4,9 @@ import logger from "morgan";
 import schema from "./schema";
 import "./passport";
 import { authenticateJwt } from "./passport";
-import { isAuthenticated } from "./middlewares";
+import { isAuthenticated, test } from "./middlewares";
+import cors from "cors";
+import multer from "multer";
 
 const PORT = process.env.PORT || 4000;
 
@@ -15,7 +17,49 @@ const server = new GraphQLServer({
 
 server.express.use(logger("dev"));
 server.express.use(authenticateJwt);
+server.express.use(cors());
+
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "images");
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  }
+});
+var upload = multer({ storage }).single("file");
+server.express.post("/upload", function(req, res) {
+  upload(req, res, function(err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      return res.status(500).json(err);
+    }
+    console.log(req.file);
+    return res.status(200).send(req.file);
+  });
+});
+
+///////////////////////////
 
 server.start({ port: PORT }, () =>
   console.log(`✅ Server running on http://localhost:${PORT}`)
 );
+
+//var storage = multer.diskStorage({
+//  destination: function(req, file, cb) {
+//    cb(null, "images");
+// },
+// filename: function(req, file, cb) {
+//   cb(null, Date.now() + "-" + file.originalname);
+//  }
+//});
+//
+///var upload = multer({ storage });
+
+//server.express.post("/upload", upload.single("file"), function(req, res, next) {
+//  console.log(req.file.path, "레큐바디");
+//  next();
+//});
+
+////////////////////////////

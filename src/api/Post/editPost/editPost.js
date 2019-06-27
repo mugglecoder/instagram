@@ -7,13 +7,71 @@ export default {
   Mutation: {
     editPost: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
-      const { id, caption, location, action } = args;
+      const {
+        id,
+        caption,
+        location,
+        action,
+        deposit,
+        money,
+        airConditioner,
+        washer,
+        refrigerator,
+        internet,
+        microwave,
+        wifi,
+        bed,
+        desk,
+        induction,
+        gasRange,
+        doorLock,
+        CCTV,
+        pets,
+        elevator,
+        parking,
+        numberOfFoors,
+        electricHeating,
+        cityGasHeating,
+        nightElectric,
+        wateTax,
+        includingElectricity,
+        cityGasIncluded,
+        MLSnumbe
+      } = args;
       const { user } = request;
       const post = await prisma.$exists.post({ id, user: { id: user.id } });
       if (post) {
         if (action === EDIT) {
           return prisma.updatePost({
-            data: { caption, location },
+            data: {
+              caption,
+              location,
+              deposit,
+              money,
+              airConditioner,
+              washer,
+              refrigerator,
+              internet,
+              microwave,
+              wifi,
+              bed,
+              desk,
+              induction,
+              gasRange,
+              doorLock,
+              CCTV,
+              pets,
+              elevator,
+              parking,
+              numberOfFoors,
+              electricHeating,
+              cityGasHeating,
+              nightElectric,
+              wateTax,
+              includingElectricity,
+              cityGasIncluded,
+              MLSnumbe
+            },
             where: { id }
           });
         } else if (action === DELETE) {
