@@ -65,6 +65,7 @@ export default {
         includingElectricity,
         cityGasIncluded,
         MLSnumber,
+
         user: { connect: { id: user.id } }
       });
       if (files) {

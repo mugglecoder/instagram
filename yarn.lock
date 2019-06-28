@@ -1500,7 +1500,7 @@ body-parser@1.18.3:
     raw-body "2.3.3"
     type-is "~1.6.16"
 
-body-parser@1.19.0, body-parser@^1.18.2, body-parser@^1.18.3:
+body-parser@1.19.0, body-parser@^1.18.2, body-parser@^1.18.3, body-parser@^1.19.0:
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.19.0.tgz#96b2709e57c9c4e09a6fd66a8fd979844f69f08a"
   integrity sha512-dhEPs72UPbDnAQJ9ZKMNTP6ptJaionhP5cBb541nXPlW60Jepo9RV/a4fX4XWW9CuFNK22krhrj1+rgzifNCsw==
@@ -2872,7 +2872,7 @@ graphql-import@^0.7.0, graphql-import@^0.7.1:
     lodash "^4.17.4"
     resolve-from "^4.0.0"
 
-graphql-middleware@3.0.2:
+graphql-middleware@3.0.2, graphql-middleware@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/graphql-middleware/-/graphql-middleware-3.0.2.tgz#c8cdb67615eec02aec237b455e679f5fc973ddc4"
   integrity sha512-sRqu1sF+77z42z1OVM1QDHKQWnWY5K3nAgqWiZwx3U4tqNZprrDuXxSChPMliV343IrVkpYdejUYq9w24Ot3FA==
@@ -2905,7 +2905,7 @@ graphql-playground-middleware-lambda@1.7.12:
   dependencies:
     graphql-playground-html "1.6.12"
 
-graphql-request@^1.5.0:
+graphql-request@^1.5.0, graphql-request@^1.8.2:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-1.8.2.tgz#398d10ae15c585676741bde3fc01d5ca948f8fbe"
   integrity sha512-dDX2M+VMsxXFCmUX0Vo0TopIZIX4ggzOtiCsThgtrKR4niiaagsGTDIHj3fsOMFETpa064vzovI+4YV4QnMbcg==

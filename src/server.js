@@ -9,32 +9,32 @@ import { isAuthenticated, test } from "./middlewares";
 import cors from "cors";
 import multer from "multer";
 import path from "path";
+import bodyParser from "body-parser";
 
-const app = express();
 const PORT = process.env.PORT || 4000;
 
-const server = new GraphQLServer({
+export const server = new GraphQLServer({
   schema,
   context: ({ request }) => ({ request, isAuthenticated })
 });
 
-const publicDir = path.join(__dirname, "test");
-path.join(__dirname);
 server.express.use(logger("dev"));
+server.express.use("/images", express.static("test"));
 server.express.use(authenticateJwt);
 server.express.use(cors());
-server.express.use("/images", express.static(publicDir));
+server.express.use(bodyParser.urlencoded({ extended: false }));
+server.express.use(bodyParser.json());
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, "images/test");
   },
   filename: function(req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, file.originalname);
   }
 });
-var upload = multer({ storage }).single("file");
-server.express.use("/upload", function(req, res) {
+export const upload = multer({ storage }).single("file");
+server.express.post("/upload", function(req, res) {
   upload(req, res, function(err) {
     if (err instanceof multer.MulterError) {
       return res.status(500).json(err);
