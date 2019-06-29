@@ -19,11 +19,11 @@ export const server = new GraphQLServer({
 });
 
 server.express.use(logger("dev"));
-server.express.use("/images", express.static(__dirname + "test"));
 server.express.use(authenticateJwt);
 server.express.use(cors());
 server.express.use(bodyParser.urlencoded({ extended: false }));
 server.express.use(bodyParser.json());
+server.express.use("/images", express.static("images"));
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
