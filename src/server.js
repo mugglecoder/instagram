@@ -19,7 +19,7 @@ export const server = new GraphQLServer({
 });
 
 server.express.use(logger("dev"));
-server.express.use("/images", express.static("test"));
+server.express.use("/images", express.static(__dirname + "test"));
 server.express.use(authenticateJwt);
 server.express.use(cors());
 server.express.use(bodyParser.urlencoded({ extended: false }));
@@ -30,10 +30,11 @@ var storage = multer.diskStorage({
     cb(null, "images/test");
   },
   filename: function(req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, Date.now() + "-" + file.originalname);
   }
 });
 export const upload = multer({ storage }).single("file");
+
 server.express.post("/upload", function(req, res) {
   upload(req, res, function(err) {
     if (err instanceof multer.MulterError) {
