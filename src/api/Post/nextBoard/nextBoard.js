@@ -3,9 +3,9 @@ import { prisma } from "../../../../generated/prisma-client";
 export default {
   Query: {
     nextBoard: async (_, __) => {
-      const nowPost = await prisma.posts({ first: 2 }).id();
+      const nowPost = await prisma.posts({ first: 6 }).id();
       console.log(nowPost[1].id);
-      return await prisma.posts({ first: 3, after: nowPost[1].id });
+      return await prisma.posts({ first: 6, after: nowPost[1].id });
     }
   }
 };

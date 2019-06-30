@@ -1,3 +1,17 @@
+enum LinkOrderByInput {
+  description_ASC
+  description_DESC
+  url_ASC
+  url_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
 type Query {
-  seeFullPost(id: String!): Post!
+  info: String!
+  seeFullPost(first: Int, skip: Int): Feed
+}
+
+type Feed {
+  post: [Post]
+  count: Int
 }

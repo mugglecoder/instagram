@@ -33,7 +33,7 @@ var storage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   }
 });
-export const upload = multer({ storage }).single("file");
+export const upload = multer({ storage }).array("file");
 
 server.express.post("/upload", function(req, res) {
   upload(req, res, function(err) {
@@ -42,7 +42,8 @@ server.express.post("/upload", function(req, res) {
     } else if (err) {
       return res.status(500).json(err);
     }
-    return res.status(200).send(req.file);
+    console.log(req);
+    return res.status(200).send(req.files);
   });
 });
 
