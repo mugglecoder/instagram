@@ -36,20 +36,34 @@ server.express.use("/public", express.static(__dirname + "/public"));
 const setting = (TMPfolder, fileName) => {
   server.express.delete("/upload", (req, res, next) => {
     console.log("지우기 요청");
+    console.log(TMPfolder, "이걸 확인해", fileName, "파일네임");
+
     if (fileName) {
-      fs.unlink(`images/tmp/${TMPfolder}/${fileName}`, function(err) {
-        if (err) {
-          console.log(err);
-          return res.status(500).send(err);
-        }
-      });
-    } else if (TMPfolder) {
-      fs.rmdir(`images/tmp/${TMPfolder}`, function(err) {
-        if (err) {
-          console.log(err);
-          return res.status(500).send(err);
-        }
-      });
+      if (!fs.existsSync(fileName)) {
+        fs.unlink(`images/tmp/${TMPfolder}/${fileName}`, function(err) {
+          if (err) {
+            console.log(err.path.split("-")[0], "errrr");
+            fs.rmdir(err.path, function(err) {
+              if (err) {
+                console.log(err, "unlink error");
+                return res.status(500).send(err);
+              }
+            });
+            console.log(err);
+            return res.status(500).send(err);
+          }
+        });
+      }
+    }
+    if (TMPfolder) {
+      if (!fs.existsSync(TMPfolder)) {
+        fs.rmdir(`images/tmp/${TMPfolder}`, function(err) {
+          if (err) {
+            console.log(err.path.split("-")[0], "rmdir error");
+            return res.status(500).send(err);
+          }
+        });
+      }
     }
   });
 
@@ -57,7 +71,7 @@ const setting = (TMPfolder, fileName) => {
   const name = fileName;
 };
 server.express.post("/upload", (req, res, next) => {
-  const TMPfolder = Date.now() + " - " + req.files.file.md5;
+  const TMPfolder = Date.now() + " _ " + req.files.file.md5;
   const fileName = Date.now() + "-" + req.files.file.name;
   const dir = `${TMPfolder}`;
 
@@ -69,10 +83,9 @@ server.express.post("/upload", (req, res, next) => {
 
   uploadFile.mv(`images/tmp/${dir}/${fileName}`, function(err) {
     if (err) {
-      console.log(err);
       return res.status(500).send(err);
     }
-
+    console.log(req.files, "여긴 업로드 부분");
     res.send(`images/tmp/${dir}/${fileName}`);
   });
   return setting(TMPfolder, fileName);
@@ -83,39 +96,3 @@ server.express.post("/upload", (req, res, next) => {
 server.start({ port: PORT }, () =>
   console.log(`✅ Server running on http://localhost:${PORT}`)
 );
-
-//var storage = multer.diskStorage({
-//  destination: function(req, file, cb) {
-//    cb(null, "images");
-// },
-// filename: function(req, file, cb) {
-//   cb(null, Date.now() + "-" + file.originalname);
-//  }
-//});
-//
-///var upload = multer({ storage });
-
-//server.express.post("/upload", upload.single("file"), function(req, res, next) {
-//  console.log(req.file.path, "레큐바디");
-//  next();
-//});
-
-////////////////////////////
-
-//var storage = multer.diskStorage({
-//  destination: function(req, file, cb) {
-//    cb(null, "images");
-// },
-// filename: function(req, file, cb) {
-//   cb(null, Date.now() + "-" + file.originalname);
-//  }
-//});
-//
-///var upload = multer({ storage });
-
-//server.express.post("/upload", upload.single("file"), function(req, res, next) {
-//  console.log(req.file.path, "레큐바디");
-//  next();
-//});
-
-////////////////////////////
