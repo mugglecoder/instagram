@@ -59,7 +59,13 @@ const setting = (TMPfolder, fileName) => {
       if (!fs.existsSync(TMPfolder)) {
         fs.rmdir(`images/tmp/${TMPfolder}`, function(err) {
           if (err) {
-            console.log(err.path.split("-")[0], "rmdir error");
+            console.log(err, "체크해 이걸");
+            fs.rmdir(err.path, function(err) {
+              if (err) {
+                console.log(err, "rm dir error");
+                return res.status(500).send(err);
+              }
+            });
             return res.status(500).send(err);
           }
         });
@@ -71,7 +77,7 @@ const setting = (TMPfolder, fileName) => {
   const name = fileName;
 };
 server.express.post("/upload", (req, res, next) => {
-  const TMPfolder = Date.now() + " _ " + req.files.file.md5;
+  const TMPfolder = Date.now() + "_" + req.files.file.md5;
   const fileName = Date.now() + "-" + req.files.file.name;
   const dir = `${TMPfolder}`;
 
@@ -85,7 +91,7 @@ server.express.post("/upload", (req, res, next) => {
     if (err) {
       return res.status(500).send(err);
     }
-    console.log(req.files, "여긴 업로드 부분");
+    console.log(req, "여긴 업로드 부분");
     res.send(`images/tmp/${dir}/${fileName}`);
   });
   return setting(TMPfolder, fileName);
