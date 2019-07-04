@@ -29,57 +29,14 @@ server.express.use(bodyParser.json());
 server.express.use(bodyParser.urlencoded({ extended: false }));
 server.express.use(cookieParser());
 server.express.use(fileUpload());
-server.express.use("/public", express.static(__dirname + "/public"));
+server.express.use("/image", express.static(__dirname + "/tmp"));
 
 ///////////////////////////
 
-const setting = (TMPfolder, fileName) => {
-  server.express.delete("/upload", (req, res, next) => {
-    console.log("지우기 요청");
-    console.log(TMPfolder, "이걸 확인해", fileName, "파일네임");
-
-    if (fileName) {
-      if (!fs.existsSync(fileName)) {
-        fs.unlink(`images/tmp/${TMPfolder}/${fileName}`, function(err) {
-          if (err) {
-            console.log(err.path.split("-")[0], "errrr");
-            fs.rmdir(err.path, function(err) {
-              if (err) {
-                console.log(err, "unlink error");
-                return res.status(500).send(err);
-              }
-            });
-            console.log(err);
-            return res.status(500).send(err);
-          }
-        });
-      }
-    }
-    if (TMPfolder) {
-      if (!fs.existsSync(TMPfolder)) {
-        fs.rmdir(`images/tmp/${TMPfolder}`, function(err) {
-          if (err) {
-            console.log(err, "체크해 이걸");
-            fs.rmdir(err.path, function(err) {
-              if (err) {
-                console.log(err, "rm dir error");
-                return res.status(500).send(err);
-              }
-            });
-            return res.status(500).send(err);
-          }
-        });
-      }
-    }
-  });
-
-  const folder = TMPfolder;
-  const name = fileName;
-};
 server.express.post("/upload", (req, res, next) => {
-  const TMPfolder = Date.now() + "_" + req.files.file.md5;
-  const fileName = Date.now() + "-" + req.files.file.name;
-  const dir = `${TMPfolder}`;
+  let TMPfolder = Date.now() + "_" + req.files.file.md5;
+  let fileName = Date.now() + "-" + req.files.file.name;
+  let dir = `${TMPfolder}`;
 
   let uploadFile = req.files.file;
 
@@ -91,10 +48,28 @@ server.express.post("/upload", (req, res, next) => {
     if (err) {
       return res.status(500).send(err);
     }
-    console.log(req, "여긴 업로드 부분");
+    console.log(req.files.file.name, "여긴 업로드 부분");
     res.send(`images/tmp/${dir}/${fileName}`);
   });
-  return setting(TMPfolder, fileName);
+});
+
+server.express.delete("/upload", (req, res, next) => {
+  console.log(req.body.id, "지우기 요청");
+  const roomName = req.body.id.split("/")[2];
+  console.log(roomName, "??");
+  if (req.body.id) {
+    fs.unlink(req.body.id, function(err) {
+      if (err) {
+        console.log(err, "errrr");
+        return res.status(500).send(err);
+      }
+    });
+  }
+  if (!fs.existsSync(roomName)) {
+    fs.rmdir(`images/tmp/${roomName}`, err => {
+      console.log(err, "방도 지움");
+    });
+  }
 });
 
 ///////////////////////////
