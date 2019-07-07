@@ -47,18 +47,6 @@ export default {
       const post = await prisma.$exists.post({ id, user: { id: user.id } });
       if (post) {
         if (action === EDIT) {
-          if (files) {
-            console.log(files, "test1234");
-            files.forEach(
-              async file =>
-                await prisma.updateFile({
-                  data: { url: file },
-                  where: {
-                    id: "cjxs69acrggbe0b12qxb31oij"
-                  }
-                })
-            );
-          }
           return prisma.updatePost({
             data: {
               caption,
