@@ -77,3 +77,4 @@ typings/
 generated
 prisma.yml
 .env
+images
