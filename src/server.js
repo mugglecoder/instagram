@@ -6,14 +6,11 @@ import schema from "./schema";
 import "./passport";
 import { authenticateJwt } from "./passport";
 import { isAuthenticated, test } from "./middlewares";
-import fs from "fs";
 import cors from "cors";
 import multer from "multer";
 import path from "path";
 import bodyParser from "body-parser";
-import { settings } from "cluster";
-const cookieParser = require("cookie-parser");
-const fileUpload = require("express-fileupload");
+import fs from "fs";
 
 const PORT = process.env.PORT || 4000;
 
@@ -23,53 +20,40 @@ export const server = new GraphQLServer({
 });
 
 server.express.use(logger("dev"));
-server.express.use(cors());
 server.express.use(authenticateJwt);
-server.express.use(bodyParser.json());
+server.express.use(cors());
 server.express.use(bodyParser.urlencoded({ extended: false }));
-server.express.use(cookieParser());
-server.express.use(fileUpload());
-server.express.use("/image", express.static(__dirname + "/tmp"));
+server.express.use(bodyParser.json());
+server.express.use("/images", express.static("images"));
 
-///////////////////////////
+const checker = () => {};
 
-server.express.post("/upload", (req, res, next) => {
-  let TMPfolder = Date.now() + "_" + req.files.file.md5;
-  let fileName = Date.now() + "-" + req.files.file.name;
-  let dir = `${TMPfolder}`;
-
-  let uploadFile = req.files.file;
-
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(`images/tmp/${dir}`);
-  }
-
-  uploadFile.mv(`images/tmp/${dir}/${fileName}`, function(err) {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    console.log(req.files.file.name, "여긴 업로드 부분");
-    res.send(`images/tmp/${dir}/${fileName}`);
-  });
-});
-
-server.express.delete("/upload", (req, res, next) => {
-  console.log(req.body.id, "지우기 요청");
-  const roomName = req.body.id.split("/")[2];
-  console.log(roomName, "??");
-  if (req.body.id) {
-    fs.unlink(req.body.id, function(err) {
-      if (err) {
-        console.log(err, "errrr");
-        return res.status(500).send(err);
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "images/test");
+  },
+  filename: function(req, file, cb) {
+    fs.exists(`images/test/${file.originalname}`, exists => {
+      if (exists) {
+        cb(null, file.originalname);
+      } else {
+        cb(null, Date.now() + "-" + file.originalname);
       }
     });
   }
-  if (!fs.existsSync(roomName)) {
-    fs.rmdir(`images/tmp/${roomName}`, err => {
-      console.log(err, "방도 지움");
-    });
-  }
+});
+export const upload = multer({ storage }).array("file");
+
+server.express.post("/upload", function(req, res) {
+  upload(req, res, function(err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      return res.status(500).json(err);
+    }
+    console.log(req.files);
+    return res.status(200).send(req.files);
+  });
 });
 
 ///////////////////////////

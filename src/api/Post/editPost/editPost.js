@@ -9,6 +9,8 @@ export default {
       isAuthenticated(request);
       const {
         id,
+        files,
+        content,
         caption,
         location,
         action,
@@ -26,6 +28,7 @@ export default {
         gasRange,
         doorLock,
         CCTV,
+        selectType,
         pets,
         elevator,
         parking,
@@ -39,12 +42,27 @@ export default {
         MLSnumbe
       } = args;
       const { user } = request;
+      const file = await prisma.post({ id }).files();
+      console.log(file, id, "file!!!!");
       const post = await prisma.$exists.post({ id, user: { id: user.id } });
       if (post) {
         if (action === EDIT) {
+          if (files) {
+            console.log(files, "test1234");
+            files.forEach(
+              async file =>
+                await prisma.updateFile({
+                  data: { url: file },
+                  where: {
+                    id: "cjxs69acrggbe0b12qxb31oij"
+                  }
+                })
+            );
+          }
           return prisma.updatePost({
             data: {
               caption,
+              content,
               location,
               deposit,
               money,
@@ -56,6 +74,7 @@ export default {
               wifi,
               bed,
               desk,
+              selectType,
               induction,
               gasRange,
               doorLock,

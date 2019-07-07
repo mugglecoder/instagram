@@ -5,8 +5,11 @@ enum ACTIONS {
 
 type Mutation {
   editPost(
+    files: [String]
     id: String!
+    content: String
     caption: String
+    selectType: String
     location: String
     deposit: String
     money: String
@@ -35,6 +38,6 @@ type Mutation {
     MLSnumber: String
     createdAt: String
     updatedAt: String
-    action: ACTIONS!
+    action: ACTIONS
   ): Post!
 }
