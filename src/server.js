@@ -57,19 +57,37 @@ server.express.post("/upload", function(req, res) {
 });
 
 server.express.delete("/upload", function(req, res, next) {
-  let path = req.body && req.body;
-  console.log(path.difference, "path");
-  path.difference.map(
-    async item =>
-      await fs.unlink(item, function(err) {
-        if (err) {
-          console.log(err);
-          return false;
-        }
-        console.log("file deleted successfully");
-        return true;
-      })
-  );
+  if (req.body && req.body.deletePostForData) {
+    let deletePostForData = req.body && req.body;
+    deletePostForData.deletePostForData.map(
+      async item =>
+        await fs.unlink(item, function(err) {
+          if (err) {
+            console.log(err);
+            return false;
+          }
+          console.log("file deleted successfully");
+          return true;
+        })
+    );
+    console.log("된다");
+  } else {
+    console.log("안된다");
+    let path = req.body && req.body;
+    console.log(path.difference, "path");
+    path.difference.map(
+      async item =>
+        await fs.unlink(item, function(err) {
+          if (err) {
+            console.log(err);
+            return false;
+          }
+          console.log("file deleted successfully");
+          return true;
+        })
+    );
+  }
+
   next();
 });
 ///////////////////////////
