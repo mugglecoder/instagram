@@ -42,11 +42,23 @@ export default {
         MLSnumbe
       } = args;
       const { user } = request;
-      const file = await prisma.post({ id }).files();
-      console.log(file, id, "file!!!!");
       const post = await prisma.$exists.post({ id, user: { id: user.id } });
       if (post) {
         if (action === EDIT) {
+          if (files) {
+            files.forEach(async file =>
+              (await prisma.$exists.file({ url: file }))
+                ? false
+                : await prisma.createFile({
+                    url: file,
+                    post: {
+                      connect: {
+                        id
+                      }
+                    }
+                  })
+            );
+          }
           return prisma.updatePost({
             data: {
               caption,

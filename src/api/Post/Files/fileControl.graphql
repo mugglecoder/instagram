@@ -1,3 +1,3 @@
 type Mutation {
-  deleteFile(id: String, url: String): File
+  deleteManyFiles(id: String, fileId: [String], url: [String]): File
 }

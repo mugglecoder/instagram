@@ -42,6 +42,7 @@ var storage = multer.diskStorage({
     });
   }
 });
+
 export const upload = multer({ storage }).array("file");
 
 server.express.post("/upload", function(req, res) {
@@ -51,11 +52,26 @@ server.express.post("/upload", function(req, res) {
     } else if (err) {
       return res.status(500).json(err);
     }
-    console.log(req.files);
     return res.status(200).send(req.files);
   });
 });
 
+server.express.delete("/upload", function(req, res, next) {
+  let path = req.body && req.body;
+  console.log(path.difference, "path");
+  path.difference.map(
+    async item =>
+      await fs.unlink(item, function(err) {
+        if (err) {
+          console.log(err);
+          return false;
+        }
+        console.log("file deleted successfully");
+        return true;
+      })
+  );
+  next();
+});
 ///////////////////////////
 
 server.start({ port: PORT }, () =>
