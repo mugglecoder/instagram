@@ -1,0 +1,3 @@
+type Mutation {
+  place(id: String, lat: String, lng: String): Place
+}
