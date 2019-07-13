@@ -7,6 +7,7 @@ export default {
         where: {
           OR: [
             { location_starts_with: args.term },
+            { deposit_contains: args.deposit },
             { caption_starts_with: args.term }
           ]
         }

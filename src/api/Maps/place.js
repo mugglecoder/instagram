@@ -10,6 +10,7 @@ export default {
         lng,
         post: { connect: { id } }
       });
+      return true;
     }
   }
 };

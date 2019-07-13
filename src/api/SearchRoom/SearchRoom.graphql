@@ -1,0 +1,33 @@
+type Query {
+  searchRoom(
+    deposit: String
+    money: String
+    caption: String
+    content: String
+    files: [String]
+    selectType: String
+    airConditioner: Boolean
+    washer: Boolean
+    refrigerator: Boolean
+    internet: Boolean
+    microwave: Boolean
+    wifi: Boolean
+    bed: Boolean
+    desk: Boolean
+    induction: Boolean
+    gasRange: Boolean
+    doorLock: Boolean
+    CCTV: Boolean
+    pets: Boolean
+    elevator: Boolean
+    parking: Boolean
+    electricHeating: Boolean
+    cityGasHeating: Boolean
+    nightElectric: Boolean
+    wateTax: Boolean
+    includingElectricity: Boolean
+    cityGasIncluded: Boolean
+    numberOfFoors: String
+    MLSnumber: String
+  ): [Post]
+}
