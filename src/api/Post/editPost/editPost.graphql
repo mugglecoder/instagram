@@ -11,8 +11,8 @@ type Mutation {
     caption: String
     selectType: String
     location: String
-    deposit: String
-    money: String
+    deposit: Int
+    money: Int
     airConditioner: Boolean
     washer: Boolean
     refrigerator: Boolean

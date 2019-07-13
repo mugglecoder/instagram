@@ -5,12 +5,11 @@ export default {
     place: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
       const { id, lat, lng } = args;
-      await prisma.createPlace({
+      return await prisma.createPlace({
         lat,
         lng,
         post: { connect: { id } }
       });
-      return true;
     }
   }
 };

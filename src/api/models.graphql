@@ -31,8 +31,8 @@ type Post {
   caption: String
   content: String
   selectType: String
-  deposit: String
-  money: String
+  deposit: Int
+  money: Int
   user: User!
   files: [File]
   likes: [Like]

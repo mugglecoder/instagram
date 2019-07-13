@@ -4,8 +4,8 @@ type Mutation {
     content: String
     files: [String]
     selectType: String
-    deposit: String
-    money: String
+    deposit: Int
+    money: Int
     airConditioner: Boolean
     washer: Boolean
     refrigerator: Boolean

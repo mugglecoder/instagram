@@ -2,8 +2,8 @@ import { prisma } from "../../../generated/prisma-client";
 
 export default {
   Query: {
-    searchRoom: async (_, args) =>
-      prisma.posts({
+    searchRoom: async (_, args) => {
+      return prisma.posts({
         where: {
           AND: [
             {
@@ -37,13 +37,17 @@ export default {
               ]
             },
             {
+              AND: [{ money_gte: args.money }, { money_lte: args.money2 }]
+            },
+            {
               AND: [
-                { money_contains: args.money },
-                { deposit_contains: args.deposit }
+                { deposit_gte: args.deposit },
+                { deposit_lte: args.deposit2 }
               ]
             }
           ]
         }
-      })
+      });
+    }
   }
 };

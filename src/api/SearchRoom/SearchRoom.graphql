@@ -1,7 +1,9 @@
 type Query {
   searchRoom(
-    deposit: String
-    money: String
+    deposit: Int
+    deposit2: Int
+    money: Int
+    money2: Int
     caption: String
     content: String
     files: [String]
