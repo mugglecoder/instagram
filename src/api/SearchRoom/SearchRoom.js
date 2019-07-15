@@ -7,7 +7,7 @@ export default {
         where: {
           AND: [
             {
-              OR: [
+              AND: [
                 { caption_contains: args.caption },
                 { content_contains: args.content },
                 { selectType_contains: args.selectType },
