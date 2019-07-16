@@ -13,27 +13,27 @@ type Mutation {
     location: String
     deposit: Int
     money: Int
-    airConditioner: Boolean
-    washer: Boolean
-    refrigerator: Boolean
-    internet: Boolean
-    microwave: Boolean
-    wifi: Boolean
-    bed: Boolean
-    desk: Boolean
-    induction: Boolean
-    gasRange: Boolean
-    doorLock: Boolean
-    CCTV: Boolean
-    pets: Boolean
-    elevator: Boolean
-    parking: Boolean
-    electricHeating: Boolean
-    cityGasHeating: Boolean
-    nightElectric: Boolean
-    wateTax: Boolean
-    includingElectricity: Boolean
-    cityGasIncluded: Boolean
+    airConditioner: String
+    washer: String
+    refrigerator: String
+    internet: String
+    microwave: String
+    wifi: String
+    bed: String
+    desk: String
+    induction: String
+    gasRange: String
+    doorLock: String
+    CCTV: String
+    pets: String
+    elevator: String
+    parking: String
+    electricHeating: String
+    cityGasHeating: String
+    nightElectric: String
+    wateTax: String
+    includingElectricity: String
+    cityGasIncluded: String
     numberOfFoors: String
     MLSnumber: String
     createdAt: String

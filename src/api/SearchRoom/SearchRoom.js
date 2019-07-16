@@ -3,7 +3,8 @@ import { prisma } from "../../../generated/prisma-client";
 export default {
   Query: {
     searchRoom: async (_, args) => {
-      console.log(args, "console");
+      const {} = args;
+
       const data = await prisma.posts({
         where: {
           AND: [
@@ -19,65 +20,67 @@ export default {
                   OR: [{ selectType_contains: args.selectType }]
                 },
                 {
-                  OR: [{ airConditioner: args.airConditioner }]
+                  OR: [{ airConditioner_contains: args.airConditioner }]
                 },
-                { OR: [{ washer: args.washer }] },
+                { OR: [{ washer_contains: args.washer }] },
                 {
-                  OR: [{ refrigerator: args.refrigerator }]
-                },
-                {
-                  OR: [{ internet: args.internet }]
+                  OR: [{ refrigerator_contains: args.refrigerator }]
                 },
                 {
-                  OR: [{ microwave: args.microwave }]
+                  OR: [{ internet_contains: args.internet }]
                 },
                 {
-                  OR: [{ wifi: args.wifi }]
+                  OR: [{ microwave_contains: args.microwave }]
                 },
                 {
-                  OR: [{ bed: args.bed }]
+                  OR: [{ wifi_contains: args.wifi }]
                 },
                 {
-                  OR: [{ desk: args.desk }]
+                  OR: [{ bed_contains: args.bed }]
                 },
                 {
-                  OR: [{ induction: args.induction }]
+                  OR: [{ desk_contains: args.desk }]
                 },
                 {
-                  OR: [{ gasRange: args.gasRange }]
+                  OR: [{ induction_contains: args.induction }]
                 },
                 {
-                  OR: [{ doorLock: args.doorLock }]
+                  OR: [{ gasRange_contains: args.gasRange }]
                 },
                 {
-                  OR: [{ CCTV: args.CCTV }]
+                  OR: [{ doorLock_contains: args.doorLock }]
                 },
                 {
-                  OR: [{ pets: args.pets }]
+                  OR: [{ CCTV_contains: args.CCTV }]
                 },
                 {
-                  OR: [{ elevator: args.elevator }]
+                  OR: [{ pets_contains: args.pets }]
                 },
                 {
-                  OR: [{ parking: args.parking }]
+                  OR: [{ elevator_contains: args.elevator }]
                 },
                 {
-                  OR: [{ electricHeating: args.electricHeating }]
+                  OR: [{ parking_contains: args.parking }]
                 },
                 {
-                  OR: [{ cityGasHeating: args.cityGasHeating }]
+                  OR: [{ electricHeating_contains: args.electricHeating }]
                 },
                 {
-                  OR: [{ nightElectric: args.nightElectric }]
+                  OR: [{ cityGasHeating_contains: args.cityGasHeating }]
                 },
                 {
-                  OR: [{ wateTax: args.wateTax }]
+                  OR: [{ nightElectric_contains: args.nightElectric }]
                 },
                 {
-                  OR: [{ includingElectricity: args.includingElectricity }]
+                  OR: [{ wateTax_contains: args.wateTax }]
                 },
                 {
-                  OR: [{ cityGasIncluded: args.cityGasIncluded }]
+                  OR: [
+                    { includingElectricity_contains: args.includingElectricity }
+                  ]
+                },
+                {
+                  OR: [{ cityGasIncluded_contains: args.cityGasIncluded }]
                 },
                 {
                   OR: [{ numberOfFoors_contains: args.numberOfFoors }]
@@ -97,7 +100,6 @@ export default {
           ]
         }
       });
-      console.log(data, "data");
       return data;
     }
   }
