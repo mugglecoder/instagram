@@ -1,5 +1,7 @@
 type Query {
   searchRoom(
+    count: Int
+    count2: Int
     deposit: Int
     deposit2: Int
     money: Int
