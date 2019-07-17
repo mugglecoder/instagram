@@ -4,16 +4,18 @@ export default {
   Query: {
     currentData: async (_, args) => {
       const { lat, lng, lat2, lng2 } = args;
-      await prisma.posts({
+      const placeId = prisma.posts({
         where: {
           AND: [
-            { lat_gte: lat },
-            { lng_lte: lng },
-            { lat2_gte: lat2 },
-            { lng2_lte: lng2 }
+            { lat_gte: lat2 },
+            { lat_lte: lat },
+            { lng_gte: lng },
+            { lng_lte: lng2 }
           ]
         }
       });
+      console.log(placeId);
+      return placeId;
     }
   }
 };

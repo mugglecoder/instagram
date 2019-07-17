@@ -1,5 +1,7 @@
 type Mutation {
   upload(
+    lat: Float
+    lng: Float
     caption: String
     content: String
     files: [String]

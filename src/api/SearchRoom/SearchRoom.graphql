@@ -1,5 +1,9 @@
 type Query {
   searchRoom(
+    lat: Float
+    lng: Float
+    lat2: Float
+    lng2: Float
     count: Int
     count2: Int
     deposit: Int

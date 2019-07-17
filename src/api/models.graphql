@@ -27,6 +27,8 @@ type User {
 type Post {
   id: ID!
   places: [Place]
+  lat: Float
+  lng: Float
   location: String
   caption: String
   content: String
@@ -95,8 +97,8 @@ type File {
 type Place {
   id: ID!
   post: Post
-  lat: String
-  lng: String
+  lat: Float
+  lng: Float
   createdAt: String
   updatedAt: String
 }

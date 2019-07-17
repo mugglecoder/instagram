@@ -27,6 +27,8 @@ type Post {
   selectType:String
   deposit: Int
   money: Int
+  lat:Float
+  lng:Float
   places: [Place] @relation(name: "PlacesOfPost", onDelete: CASCADE)
   user: User @relation(name: "PostsOfUser")
   files: [File] @relation(name: "FilesOfPost", onDelete: CASCADE)
@@ -89,8 +91,8 @@ type File {
 type Place {
   id : ID! @id
   post:Post @relation(name: "PlacesOfPost")
-  lat:String
-  lng:String
+  lat:Float
+  lng:Float
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

@@ -6,6 +6,9 @@ export default {
       isAuthenticated(request);
       const { user } = request;
       const {
+        lat,
+        lng,
+        places,
         selectType,
         deposit,
         money,
@@ -37,6 +40,9 @@ export default {
         MLSnumber
       } = args;
       const post = await prisma.createPost({
+        lng,
+        lat,
+        places,
         selectType,
         deposit,
         money,
