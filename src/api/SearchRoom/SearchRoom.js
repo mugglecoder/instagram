@@ -15,7 +15,7 @@ export default {
         }
       });
       console.log(placeId, "placeId");
-      const data = prisma.posts({
+      const data = await prisma.posts({
         where: {
           AND: [
             {
