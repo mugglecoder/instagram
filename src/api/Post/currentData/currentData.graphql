@@ -1,3 +1,15 @@
 type Query {
-  currentData(lat: Float, lng: Float, lat2: Float, lng2: Float): [Post]
+  currentData(
+    first: Int
+    skip: Int
+    lat: Float
+    lng: Float
+    lat2: Float
+    lng2: Float
+  ): Feeds
+}
+
+type Feeds {
+  post: [Post]
+  count: Int
 }

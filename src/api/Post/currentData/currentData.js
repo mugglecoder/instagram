@@ -3,8 +3,11 @@ import { prisma } from "../../../../generated/prisma-client";
 export default {
   Query: {
     currentData: async (_, args) => {
-      const { lat, lng, lat2, lng2 } = args;
-      const placeId = prisma.posts({
+      const { first, skip, lat, lng, lat2, lng2 } = args;
+      const post = await prisma.posts({
+        skip,
+        first,
+        orderBy: "createdAt_DESC",
         where: {
           AND: [
             { lat_gte: lat2 },
@@ -14,8 +17,12 @@ export default {
           ]
         }
       });
-      console.log(placeId);
-      return placeId;
+      const count = await prisma
+        .postsConnection()
+        .aggregate()
+        .count();
+      console.log(count, post);
+      return { post, count };
     }
   }
 };

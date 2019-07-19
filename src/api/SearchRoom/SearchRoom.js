@@ -1,10 +1,49 @@
 import { prisma } from "../../../generated/prisma-client";
+import { post } from "popsicle";
 
 export default {
   Query: {
     searchRoom: async (_, args) => {
-      const { lat, lng, lat2, lng2 } = args;
-      const placeId = prisma.posts({
+      const {
+        lat,
+        lng,
+        lat2,
+        lng2,
+        count,
+        count2,
+        deposit,
+        deposit2,
+        money,
+        money2,
+        caption,
+        content,
+        files,
+        selectType,
+        airConditioner,
+        washer,
+        refrigerator,
+        internet,
+        microwave,
+        wifi,
+        bed,
+        desk,
+        induction,
+        gasRange,
+        doorLock,
+        CCTV,
+        pets,
+        elevator,
+        parking,
+        electricHeating,
+        cityGasHeating,
+        nightElectric,
+        wateTax,
+        includingElectricity,
+        cityGasIncluded,
+        numberOfFoors,
+        MLSnumber
+      } = args;
+      const placeId = await prisma.posts({
         where: {
           AND: [
             { lat_gte: lat2 },
@@ -14,88 +53,89 @@ export default {
           ]
         }
       });
-      console.log(placeId, "placeId");
+      let postIds = [];
+      const result = placeId.map(item => postIds.push(item.id));
       const data = await prisma.posts({
+        orderBy: "createdAt_DESC",
         where: {
+          id_in: postIds,
           AND: [
             {
               AND: [
                 {
-                  OR: [{ caption_contains: args.caption }]
+                  OR: [{ caption_contains: caption }]
                 },
                 {
-                  OR: [{ content_contains: args.content }]
+                  OR: [{ content_contains: content }]
                 },
                 {
-                  OR: [{ selectType_contains: args.selectType }]
+                  OR: [{ selectType_contains: selectType }]
                 },
                 {
-                  OR: [{ airConditioner_contains: args.airConditioner }]
+                  OR: [{ airConditioner_contains: airConditioner }]
                 },
-                { OR: [{ washer_contains: args.washer }] },
+                { OR: [{ washer_contains: washer }] },
                 {
-                  OR: [{ refrigerator_contains: args.refrigerator }]
-                },
-                {
-                  OR: [{ internet_contains: args.internet }]
+                  OR: [{ refrigerator_contains: refrigerator }]
                 },
                 {
-                  OR: [{ microwave_contains: args.microwave }]
+                  OR: [{ internet_contains: internet }]
                 },
                 {
-                  OR: [{ wifi_contains: args.wifi }]
+                  OR: [{ microwave_contains: microwave }]
                 },
                 {
-                  OR: [{ bed_contains: args.bed }]
+                  OR: [{ wifi_contains: wifi }]
                 },
                 {
-                  OR: [{ desk_contains: args.desk }]
+                  OR: [{ bed_contains: bed }]
                 },
                 {
-                  OR: [{ induction_contains: args.induction }]
+                  OR: [{ desk_contains: desk }]
                 },
                 {
-                  OR: [{ gasRange_contains: args.gasRange }]
+                  OR: [{ induction_contains: induction }]
                 },
                 {
-                  OR: [{ doorLock_contains: args.doorLock }]
+                  OR: [{ gasRange_contains: gasRange }]
                 },
                 {
-                  OR: [{ CCTV_contains: args.CCTV }]
+                  OR: [{ doorLock_contains: doorLock }]
                 },
                 {
-                  OR: [{ pets_contains: args.pets }]
+                  OR: [{ CCTV_contains: CCTV }]
                 },
                 {
-                  OR: [{ elevator_contains: args.elevator }]
+                  OR: [{ pets_contains: pets }]
                 },
                 {
-                  OR: [{ parking_contains: args.parking }]
+                  OR: [{ elevator_contains: elevator }]
                 },
                 {
-                  OR: [{ electricHeating_contains: args.electricHeating }]
+                  OR: [{ parking_contains: parking }]
                 },
                 {
-                  OR: [{ cityGasHeating_contains: args.cityGasHeating }]
+                  OR: [{ electricHeating_contains: electricHeating }]
                 },
                 {
-                  OR: [{ nightElectric_contains: args.nightElectric }]
+                  OR: [{ cityGasHeating_contains: cityGasHeating }]
                 },
                 {
-                  OR: [{ wateTax_contains: args.wateTax }]
+                  OR: [{ nightElectric_contains: nightElectric }]
                 },
                 {
-                  OR: [
-                    { includingElectricity_contains: args.includingElectricity }
-                  ]
+                  OR: [{ wateTax_contains: wateTax }]
                 },
                 {
-                  OR: [{ cityGasIncluded_contains: args.cityGasIncluded }]
+                  OR: [{ includingElectricity_contains: includingElectricity }]
                 },
                 {
-                  OR: [{ numberOfFoors_contains: args.numberOfFoors }]
+                  OR: [{ cityGasIncluded_contains: cityGasIncluded }]
                 },
-                { OR: [{ MLSnumber_contains: args.MLSnumber }] }
+                {
+                  OR: [{ numberOfFoors_contains: numberOfFoors }]
+                },
+                { OR: [{ MLSnumber_contains: MLSnumber }] }
               ]
             },
             {
@@ -110,6 +150,8 @@ export default {
           ]
         }
       });
+      console.log(data, "result");
+
       return data;
     }
   }
