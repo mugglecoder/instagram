@@ -1,3 +1,8 @@
 type Query {
-  nextBoard: [Post]
+  nextBoard(first: Int): Feedss
+}
+
+type Feedss {
+  post: [Post]
+  count: Int
 }

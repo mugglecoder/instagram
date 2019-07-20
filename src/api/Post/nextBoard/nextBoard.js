@@ -2,10 +2,20 @@ import { prisma } from "../../../../generated/prisma-client";
 
 export default {
   Query: {
-    nextBoard: async (_, __) => {
-      const nowPost = await prisma.posts({ first: 6 }).id();
-      console.log(nowPost[1].id);
-      return await prisma.posts({ first: 6, after: nowPost[1].id });
+    nextBoard: async (_, args) => {
+      const firsts = await prisma.posts({
+        orderBy: "createdAt_DESC"
+      });
+      console.log(firsts);
+      const post = await prisma.posts({
+        first: args.first,
+        after: firsts[firsts.length - 1].id
+      });
+      const count = await prisma
+        .postsConnection()
+        .aggregate()
+        .count();
+      return { post, count };
     }
   }
 };
