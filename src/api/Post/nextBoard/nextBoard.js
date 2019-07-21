@@ -9,7 +9,7 @@ export default {
       console.log(firsts);
       const post = await prisma.posts({
         first: args.first,
-        after: firsts[firsts.length - 1].id
+        skip: args.skip
       });
       const count = await prisma
         .postsConnection()
