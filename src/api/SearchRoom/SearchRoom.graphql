@@ -1,5 +1,7 @@
 type Query {
   searchRoom(
+    first: Int
+    skip: Int
     lat: Float
     lng: Float
     lat2: Float
@@ -37,5 +39,10 @@ type Query {
     cityGasIncluded: String
     numberOfFoors: String
     MLSnumber: String
-  ): [Post]
+  ): Feedsss
+}
+
+type Feedsss {
+  post: [Post]
+  counts: Int
 }

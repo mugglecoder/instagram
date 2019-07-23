@@ -5,6 +5,8 @@ export default {
   Query: {
     searchRoom: async (_, args) => {
       const {
+        first,
+        skip,
         lat,
         lng,
         lat2,
@@ -55,7 +57,9 @@ export default {
       });
       let postIds = [];
       const result = placeId.map(item => postIds.push(item.id));
-      const data = await prisma.posts({
+      const post = await prisma.posts({
+        skip,
+        first,
         orderBy: "createdAt_DESC",
         where: {
           id_in: postIds,
@@ -150,9 +154,21 @@ export default {
           ]
         }
       });
-      console.log(data, "result");
+      const counts = prisma
+        .postsConnection({
+          where: {
+            AND: [
+              { lat_gte: lat2 },
+              { lat_lte: lat },
+              { lng_gte: lng },
+              { lng_lte: lng2 }
+            ]
+          }
+        })
+        .aggregate()
+        .count();
 
-      return data;
+      return { post, counts };
     }
   }
 };

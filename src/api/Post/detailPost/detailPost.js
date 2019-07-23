@@ -4,13 +4,13 @@ export default {
   Query: {
     detailPost: async (_, args, { request, isAuthenticated }) => {
       const { id } = args;
-      const counter = await prisma.post({ id }).count();
+      const counter = prisma.post({ id }).count();
       const plusCount = counter + 1;
-      await prisma.updatePost({
+      prisma.updatePost({
         where: { id },
         data: { count: plusCount }
       });
-      return await prisma.post({ id });
+      return prisma.post({ id });
     }
   }
 };

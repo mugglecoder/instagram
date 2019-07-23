@@ -2,9 +2,9 @@ import { prisma } from "../../../../generated/prisma-client";
 
 export default {
   Query: {
-    currentData: async (_, args) => {
+    currentData: (_, args) => {
       const { first, skip, lat, lng, lat2, lng2 } = args;
-      const post = await prisma.posts({
+      const post = prisma.posts({
         skip,
         first,
         orderBy: "createdAt_DESC",
@@ -17,7 +17,7 @@ export default {
           ]
         }
       });
-      const count = await prisma
+      const count = prisma
         .postsConnection()
         .aggregate()
         .count();

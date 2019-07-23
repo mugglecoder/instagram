@@ -25,6 +25,7 @@ export default {
         const existingLike = await prisma.$exists.like(filterOptions);
         if (existingLike) {
           await prisma.deleteManyLikes(filterOptions);
+          return false;
         } else {
           await prisma.createLike({
             user: {

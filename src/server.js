@@ -93,5 +93,5 @@ server.express.delete("/upload", function(req, res, next) {
 ///////////////////////////
 
 server.start({ port: PORT }, () =>
-  console.log(`✅ Server running on http://localhost:${PORT}`)
+  console.log(`✅ Server running on http://127.0.0.1:${PORT}`)
 );

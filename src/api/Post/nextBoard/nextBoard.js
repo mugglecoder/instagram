@@ -7,11 +7,11 @@ export default {
         orderBy: "createdAt_DESC"
       });
       console.log(firsts);
-      const post = await prisma.posts({
+      const post = prisma.posts({
         first: args.first,
-        skip: args.skip
+        after: firsts[firsts.length - 1].id
       });
-      const count = await prisma
+      const count = prisma
         .postsConnection()
         .aggregate()
         .count();
