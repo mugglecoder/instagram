@@ -57,7 +57,7 @@ export default {
       });
       let postIds = [];
       const result = placeId.map(item => postIds.push(item.id));
-      const post = await prisma.posts({
+      const post = prisma.posts({
         skip,
         first,
         orderBy: "createdAt_DESC",
