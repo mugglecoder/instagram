@@ -1,5 +1,4 @@
 import { prisma } from "../../../generated/prisma-client";
-import { post } from "popsicle";
 
 export default {
   Query: {
@@ -45,24 +44,14 @@ export default {
         numberOfFoors,
         MLSnumber
       } = args;
-      const placeId = await prisma.posts({
-        where: {
-          AND: [
-            { lat_gte: lat2 },
-            { lat_lte: lat },
-            { lng_gte: lng },
-            { lng_lte: lng2 }
-          ]
-        }
-      });
-      let postIds = [];
-      const result = placeId.map(item => postIds.push(item.id));
-      const post = prisma.posts({
+
+      //서버 빠르게 해보기
+
+      const post = await prisma.posts({
         skip,
         first,
         orderBy: "createdAt_DESC",
         where: {
-          id_in: postIds,
           AND: [
             {
               AND: [
@@ -140,6 +129,14 @@ export default {
                   OR: [{ numberOfFoors_contains: numberOfFoors }]
                 },
                 { OR: [{ MLSnumber_contains: MLSnumber }] }
+              ]
+            },
+            {
+              AND: [
+                { lat_gte: lat2 },
+                { lat_lte: lat },
+                { lng_gte: lng },
+                { lng_lte: lng2 }
               ]
             },
             {
