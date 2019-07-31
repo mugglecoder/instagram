@@ -1,9 +1,10 @@
 import { prisma } from "../../../generated/prisma-client";
 
 export default {
-  Query: {
+  Mutation: {
     searchRoom: async (_, args) => {
       const {
+        id,
         first,
         skip,
         lat,
@@ -151,7 +152,7 @@ export default {
           ]
         }
       });
-      const counts = prisma
+      const counts = await prisma
         .postsConnection({
           where: {
             AND: [
@@ -164,8 +165,8 @@ export default {
         })
         .aggregate()
         .count();
-
-      return { post, counts };
+      const preData = prisma.post({ id });
+      return { post, counts, preData };
     }
   }
 };
