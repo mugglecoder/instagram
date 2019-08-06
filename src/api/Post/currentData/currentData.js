@@ -18,10 +18,18 @@ export default {
         }
       });
       const count = prisma
-        .postsConnection()
+        .postsConnection({
+          where: {
+            AND: [
+              { lat_gte: lat2 },
+              { lat_lte: lat },
+              { lng_gte: lng },
+              { lng_lte: lng2 }
+            ]
+          }
+        })
         .aggregate()
         .count();
-      console.log(count, post);
       return { post, count };
     }
   }

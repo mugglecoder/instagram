@@ -47,7 +47,7 @@ export default {
       } = args;
 
       //서버 빠르게 해보기
-
+      console.log(skip, first, "yay in the searchRoom");
       const post = await prisma.posts({
         skip,
         first,
@@ -156,16 +156,110 @@ export default {
         .postsConnection({
           where: {
             AND: [
-              { lat_gte: lat2 },
-              { lat_lte: lat },
-              { lng_gte: lng },
-              { lng_lte: lng2 }
+              {
+                AND: [
+                  {
+                    OR: [{ caption_contains: caption }]
+                  },
+                  {
+                    OR: [{ content_contains: content }]
+                  },
+                  {
+                    OR: [{ selectType_contains: selectType }]
+                  },
+                  {
+                    OR: [{ airConditioner_contains: airConditioner }]
+                  },
+                  { OR: [{ washer_contains: washer }] },
+                  {
+                    OR: [{ refrigerator_contains: refrigerator }]
+                  },
+                  {
+                    OR: [{ internet_contains: internet }]
+                  },
+                  {
+                    OR: [{ microwave_contains: microwave }]
+                  },
+                  {
+                    OR: [{ wifi_contains: wifi }]
+                  },
+                  {
+                    OR: [{ bed_contains: bed }]
+                  },
+                  {
+                    OR: [{ desk_contains: desk }]
+                  },
+                  {
+                    OR: [{ induction_contains: induction }]
+                  },
+                  {
+                    OR: [{ gasRange_contains: gasRange }]
+                  },
+                  {
+                    OR: [{ doorLock_contains: doorLock }]
+                  },
+                  {
+                    OR: [{ CCTV_contains: CCTV }]
+                  },
+                  {
+                    OR: [{ pets_contains: pets }]
+                  },
+                  {
+                    OR: [{ elevator_contains: elevator }]
+                  },
+                  {
+                    OR: [{ parking_contains: parking }]
+                  },
+                  {
+                    OR: [{ electricHeating_contains: electricHeating }]
+                  },
+                  {
+                    OR: [{ cityGasHeating_contains: cityGasHeating }]
+                  },
+                  {
+                    OR: [{ nightElectric_contains: nightElectric }]
+                  },
+                  {
+                    OR: [{ wateTax_contains: wateTax }]
+                  },
+                  {
+                    OR: [
+                      { includingElectricity_contains: includingElectricity }
+                    ]
+                  },
+                  {
+                    OR: [{ cityGasIncluded_contains: cityGasIncluded }]
+                  },
+                  {
+                    OR: [{ numberOfFoors_contains: numberOfFoors }]
+                  },
+                  { OR: [{ MLSnumber_contains: MLSnumber }] }
+                ]
+              },
+              {
+                AND: [
+                  { lat_gte: lat2 },
+                  { lat_lte: lat },
+                  { lng_gte: lng },
+                  { lng_lte: lng2 }
+                ]
+              },
+              {
+                AND: [{ money_gte: args.money }, { money_lte: args.money2 }]
+              },
+              {
+                AND: [
+                  { deposit_gte: args.deposit },
+                  { deposit_lte: args.deposit2 }
+                ]
+              }
             ]
           }
         })
         .aggregate()
         .count();
       const preData = prisma.post({ id });
+      console.log(counts, "counts");
       return { post, counts, preData };
     }
   }
