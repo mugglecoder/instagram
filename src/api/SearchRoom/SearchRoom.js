@@ -258,9 +258,9 @@ export default {
         })
         .aggregate()
         .count();
-      const preData = prisma.post({ id });
-      console.log(counts, "counts");
-      return { post, counts, preData };
+
+      console.log(counts, "counts", post, "포스트");
+      return { post, counts };
     }
   }
 };
