@@ -306,12 +306,7 @@ export default {
         .aggregate()
         .count();
 
-<<<<<<< HEAD
       return { post, counts, preData };
-=======
-      console.log(counts, "counts", post, "포스트");
-      return { post, counts };
->>>>>>> 92ad6b18300648efcf51a6066502d1ea62631aae
     }
   }
 };
