@@ -21,7 +21,7 @@ export default {
         ]
       };
       const existingLike = await prisma.$exists.like(filterOptions);
-      console.log(existingLike);
+
       if (existingLike) {
         return true;
       } else {
