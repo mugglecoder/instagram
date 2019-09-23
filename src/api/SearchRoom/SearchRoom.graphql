@@ -46,4 +46,5 @@ type Mutation {
 type Feedsss {
   post: [Post]
   counts: Int
+  preData: Post
 }
