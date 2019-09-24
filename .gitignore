@@ -75,6 +75,6 @@ typings/
 # FuseBox cache
 .fusebox/
 generated
-prisma.yml
 .env
 images
+build
