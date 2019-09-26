@@ -46,49 +46,6 @@ export default {
         MLSnumber
       } = args;
 
-      //서버 빠르게 해보기
-      console.log(
-        id,
-        first,
-        skip,
-        lat,
-        lng,
-        lat2,
-        lng2,
-        count,
-        count2,
-        deposit,
-        deposit2,
-        money,
-        money2,
-        caption,
-        content,
-        files,
-        selectType,
-        airConditioner,
-        washer,
-        refrigerator,
-        internet,
-        microwave,
-        wifi,
-        bed,
-        desk,
-        induction,
-        gasRange,
-        doorLock,
-        CCTV,
-        pets,
-        elevator,
-        parking,
-        electricHeating,
-        cityGasHeating,
-        nightElectric,
-        wateTax,
-        includingElectricity,
-        cityGasIncluded,
-        numberOfFoors,
-        MLSnumber
-      );
       const preData = await prisma.post({ id });
       const post = await prisma.posts({
         skip,
